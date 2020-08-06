@@ -1,4 +1,4 @@
-from bc_dmn import ruly
+import ruly
 
 
 def test_backward_chain():

@@ -1,4 +1,4 @@
-from bc_dmn.ruly import common
+from ruly import common
 
 
 def backward_chain(knowledge_base, output_name,
@@ -42,7 +42,7 @@ def backward_chain(knowledge_base, output_name,
 
 
 def evaluate(inputs, antecedent):
-    """Evaluates an antecedent
+    """Evaluates truthfulness of an antecedent
 
     Args:
         inputs (Dict[str, Any]): variable values
