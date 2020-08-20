@@ -57,7 +57,16 @@ Attributes:
 """
 
 
-def get_rule_input_variables(rule):
+Unknown = namedtuple('Unknown', ['state', 'derived_name'])
+Unknown.__doc__ = """Structure representing unknown combination of state and
+derived variable.
+
+Attributes:
+    state (Dict[str, Any]): known variable values
+    derived_name (str): unknown derived variable"""
+
+
+def get_rule_depending_variables(rule):
     """Calculate all input variables in a rule
 
     Returns:
@@ -66,14 +75,3 @@ def get_rule_input_variables(rule):
         return set([rule.antecedent.name])
     elif isinstance(rule.antecedent, Expression):
         return set([c.name for c in rule.antecedent.children])
-
-
-def fire_first(rules):
-    """Conflict resolver function, returns the value of the first rule
-
-    Args:
-        rules (List[Rule]): list of rules that fired
-
-    Returns:
-        Any: value of the first rule's consequent"""
-    return rules[0].consequent.value

@@ -1,44 +1,58 @@
-from bc_dmn.ruly import common
+from ruly import common
 
 
 def backward_chain(knowledge_base, output_name,
-                   conflict_resolver=common.fire_first, **kwargs):
+                   resolve_conflict_cb=None, **kwargs):
     """Evaulates the output using backward chaining
 
     Args:
-        knowledge_base (bc_dmn.ruly.KnowledgeBase): knowledge base
+        knowledge_base (ruly.KnowledgeBase): knowledge base
         output_name (str): name of the output variable
-        conflict_resolver (Callable[List[bc_dmn.ruly.Rule], Any]): function
-            used to determine how value is calculated if multiple rules should
-            fire at same variable
+        resolve_conflict_cb (Callable[List[ruly.Rule], Any]): function used to
+            determine how value is calculated if multiple rules should fire at
+            same variable, uses first found rule if None
         kwargs: names and values of input variables
 
     Returns:
-        Dict[str, Any]: evaluator state, keys are variable names and values are
-            their values"""
+        Tuple[Dict[str, Any], Set[ruly.Unknown]]: tuple containing evaluator
+            state where keys are variable names and values are their values and
+            list of found unknowns for which rules couldn't be applied"""
     state = {
         name: kwargs.get(name)
         for name in knowledge_base.input_variables.union(
             knowledge_base.derived_variables)}
     fired_rules = []
+    unknowns = set()
     for rule in knowledge_base.rules:
         if rule.consequent.name != output_name:
             continue
-        for variable in common.get_rule_input_variables(rule):
+        depending_variables = common.get_rule_depending_variables(rule)
+        for variable in [var for var, value in depending_variables.items()
+                         if value is not None]:
+            if variable in knowledge_base.input_variables:
+                # TODO handle missing inputs
+                break
+            state, new_unknowns = backward_chain(
+                knowledge_base,
+                variable,
+                resolve_conflict_cb=resolve_conflict_cb,
+                **state)
+            unknowns |= new_unknowns
             if state[variable] is None:
-                if variable in knowledge_base.input_variables:
-                    # TODO handle missing inputs
-                    break
-                state = backward_chain(knowledge_base, variable, **state)
-                if state[variable] is None:
-                    # TODO derived variable not calculated, handle this
-                    break
+                unknowns.add(common.Unknown(dict(state), output_name))
+                break
+            else:
+                unknowns = set([unk for unk in unknowns
+                                if unk.derived_name != variable])
         if evaluate(state, rule.antecedent):
+            if resolve_conflict_cb is None:
+                state[output_name] = rules.consequent.value
+                return state, unknowns
             fired_rules.append(rule)
 
-    if fired_rules:
-        state[output_name] = conflict_resolver(fired_rules)
-    return state
+    if len(fired_rules) > 0:
+        state[output_name] = resolve_conflict_cb(fired_rules)
+    return state, unknowns
 
 
 def evaluate(inputs, antecedent):
@@ -46,7 +60,7 @@ def evaluate(inputs, antecedent):
 
     Args:
         inputs (Dict[str, Any]): variable values
-        antecedent (Union[bc_dmn.ruly.Expression, bc_dmn.ruly.Condition]): rule
+        antecedent (Union[ruly.Expression, ruly.Condition]): rule
             antecedent
 
     Returns:
