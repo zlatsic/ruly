@@ -56,7 +56,7 @@ def backward_chain(knowledge_base, output_name,
 
 
 def evaluate(inputs, antecedent):
-    """Evaluates an antecedent
+    """Evaluates truthfulness of an antecedent
 
     Args:
         inputs (Dict[str, Any]): variable values

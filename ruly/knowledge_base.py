@@ -1,12 +1,12 @@
-from bc_dmn.ruly import common
+from ruly import (common, rule_parser)
 
 
 def create(rules):
     """Creates a knowledge base
 
     Args:
-        rules (List[ruly.Rule): initial rules of which the knowledge base
-            consists
+        rules (List[Union[ruly.Rule, str]]): initial rules of which the
+            knowledge base consists, can be string representations
 
     Returns:
         KnowledgeBase"""
@@ -17,6 +17,8 @@ def create(rules):
     base._derived_variables = set()
 
     for rule in rules:
+        if isinstance(rule, str):
+            rule = rule_parser.parse(rule)
         base.add_rule(rule)
 
     return base
