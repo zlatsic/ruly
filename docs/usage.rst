@@ -41,7 +41,7 @@ Knowledge base
 
 The central point of the ruly's rule engine is a knowledge base. It serves as a
 rule aggregator that evaluators use to derive other variable values. The
-knowledge base is implemented in the class :class:`ruly.KnowledgeBase`:
+knowledge base is implemented in the following class:
 
 .. autoclass:: ruly.KnowledgeBase
     :members:
@@ -50,11 +50,10 @@ Rule declaration
 """"""""""""""""
 
 Knowledge base requires a list of initial rules for creation and can add
-additional rules after it's instantiated. Addition of a rule to the knowledge
-base is a rule declaration. Knowledge base's API is such that it accepts both
-string declarations and already instantiated :class:`ruly.Rule` objects. The
-string representation is actually parsed into these objects that have the
-following signature:
+additional rules after it's instantiated. Knowledge base's API is such that it
+accepts both strings or :class:`ruly.Rule` objects. If strings are received,
+they are parsed into :class:`ruly.Rule` objects, more on that in its separate
+section. The object that represents the rule itself has the following signature:
 
 .. autoclass:: ruly.Rule
     :members:
@@ -89,3 +88,5 @@ Evaluation
 Ruly offers evaluation functions for individual rules and knowledge bases.
 
 .. autofunction:: ruly.backward_chain
+
+.. autofunction:: ruly.evaluate

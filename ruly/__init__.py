@@ -9,6 +9,7 @@ from ruly.common import (Rule,
 from ruly.evaluator import (backward_chain,
                             evaluate)
 from ruly.knowledge_base import KnowledgeBase
+from ruly.parser import parse
 
 
 __all__ = ['Rule',
@@ -21,4 +22,5 @@ __all__ = ['Rule',
            'Evaluation',
            'backward_chain',
            'evaluate',
-           'KnowledgeBase']
+           'KnowledgeBase',
+           'parse']

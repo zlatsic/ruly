@@ -1,4 +1,4 @@
-from ruly import (common, rule_parser)
+from ruly import (common, parser)
 
 
 class KnowledgeBase:
@@ -7,16 +7,20 @@ class KnowledgeBase:
     Args:
         rules (List[Union[ruly.Rule, str]]): initial rules of which the
             knowledge base consists, can be string representations
+        parser(Callable[[str], ruly.Rule]): parser used to turn string
+            representations into ruly.Rule objects, default is
+            :meth:`ruly.parse`
     """
 
-    def __init__(self, rules):
+    def __init__(self, rules, parse=parser.parse):
         self._rules = []
         self._input_variables = set()
         self._derived_variables = set()
+        self._parse = parse
 
         for rule in rules:
             if isinstance(rule, str):
-                rule = rule_parser.parse(rule)
+                rule = self._parse(rule)
             self.add_rule(rule)
 
     @property
@@ -44,7 +48,7 @@ class KnowledgeBase:
             rule (Union[ruly.Rule, str]): rule or its string representation to
                 add"""
         if isinstance(rule, str):
-            rule = rule_parser.parse(rule)
+            rule = self._parse(rule)
         self._rules.append(rule)
         self._input_variables.update(common.get_rule_depending_variables(rule))
         self._derived_variables.add(rule.consequent.name)

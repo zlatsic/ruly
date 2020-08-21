@@ -2,7 +2,7 @@ import ruly
 
 
 def test_backward_chain():
-    kb = ruly.knowledge_base.create([
+    kb = ruly.KnowledgeBase([
         ruly.Rule(
             ruly.Expression(
                 operator=ruly.Operator.AND,

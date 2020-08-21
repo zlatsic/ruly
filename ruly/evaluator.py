@@ -15,7 +15,7 @@ def backward_chain(knowledge_base, output_name,
         resolve_conflict_cb (Optional[Callable[[List[ruly.Rule]], Any]]):
             function used to determine how value is calculated if multiple
             rules should fire at same variable, uses first found rule if None
-        order_rules_cb(Optional[Callable[[Any, List[ruly.Rule]], List[ruly.Rule]]]):
+        order_rules_cb(Optional[Callable[[Dict[str, Any], List[ruly.Rule]], List[ruly.Rule]]]):
             function used to determine order of evaluation of rules that assign
             the goal variable, uses order in knowledge base if None
         kwargs (Dict[str, Any]): names and values of input variables
@@ -34,7 +34,7 @@ def backward_chain(knowledge_base, output_name,
     ordered_rules = [rule for rule in knowledge_base.rules
                      if rule.consequent.name == output_name]
     if order_rules_cb is not None:
-        ordered_rules = order_rules_cb(ordered_rules)
+        ordered_rules = order_rules_cb(state, ordered_rules)
 
     fired_rules = []
     for rule in ordered_rules:
@@ -69,7 +69,7 @@ def backward_chain(knowledge_base, output_name,
 
 
 def evaluate(inputs, antecedent):
-    """Evaluates truthfulness of an antecedent
+    """Evaluates truthiness of an antecedent
 
     Args:
         inputs (Dict[str, Any]): variable values
