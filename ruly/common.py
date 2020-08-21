@@ -3,67 +3,74 @@ from collections import namedtuple
 import enum
 
 
-Rule = namedtuple('Rule', ['antecedent', 'consequent'])
-Rule.__doc__ = """Knowledge base rule
+class Rule(namedtuple('Rule', ['antecedent', 'consequent'])):
+    """Knowledge base rule
 
-Attributes:
-    antecedent (Union[Condition, Expression]): expression or a condition that,
-        if evaluated to True, fires assignment defined by the consequent
-    consenquent (Assignment): represents an assignment of a value to a variable
-        name
-"""
+    Attributes:
+        antecedent (Union[ruly.Condition, ruly.Expression]): expression or a
+            condition that, if evaluated to True, fires assignment defined by
+            the consequent
+        consenquent (ruly.Assignment): represents an assignment of a value to a
+            variable name
+    """
 
 
 class Operator(enum.Enum):
     AND = 1
 
 
-Expression = namedtuple('Expression', ['operator', 'children'])
-Expression.__doc__ = """Logical expression
+class Expression(namedtuple('Expression', ['operator', 'children'])):
+    """Logical expression, aggregation of conditions and
+    sub-expressions
 
-Attributes:
-    operator (Operator): operator applied to all children when evaluated
-    children (List[Union[Condition, Expression]]): list of conditions or
-        other expressions
-"""
+    Attributes:
+        operator (ruly.Operator): operator applied to all children when
+            evaluated
+        children (List[Union[ruly.Condition, ruly.Expression]]): list of
+            conditions or other expressions
+    """
 
 
 class Condition(abc.ABC):
     """Abstract class representing a condition that needs to be satisfied when
-    evaluating an expression. Must have a name attribute.
+    evaluating an expression."""
+
+
+class EqualsCondition(namedtuple('EqualsCondition', ['name', 'value']),
+                      Condition):
+    """Condition that checks wheter variable value is
+    equal to what is written under the value attribute
 
     Attributes:
-        name (str): name of the variable under which the condition is
-            checked"""
+        name (str): variable name
+        value (Any): value against which the variable is compared to
+    """
 
 
-EqualsCondition = namedtuple('EqualsCondition', ['name', 'value'])
-Condition.register(EqualsCondition)
-EqualsCondition.__doc__ = """Condition that checks wheter variable value is equal
-to what is written in the condition
+class Assignment(namedtuple('Assignment', ['name', 'value'])):
+    """Represents assignment of a value to a variable
 
-Attributes:
-    name (str): variable name
-    value (Any): value against which the variable is compared to
-"""
+    Attributes:
+        name (str): variable name
+        value (Any): assigned value
+    """
 
 
-Assignment = namedtuple('Assignment', ['name', 'value'])
-Assignment.__doc__ = """Represents assignment of a value to a variable
+class Unknown(namedtuple('Unknown', ['state', 'derived_name'])):
+    """Structure representing unknown combination of state and
+    derived variable.
 
-Attributes:
-    name (str): variable name
-    value (Any): assigned value
-"""
+    Attributes:
+        state (Dict[str, Any]): all variable values
+        derived_name (str): unknown derived variable"""
 
 
-Unknown = namedtuple('Unknown', ['state', 'derived_name'])
-Unknown.__doc__ = """Structure representing unknown combination of state and
-derived variable.
+class Evaluation(namedtuple('Evaluation', ['state', 'unknowns'])):
+    """Structure representing an evaluation result
 
-Attributes:
-    state (Dict[str, Any]): known variable values
-    derived_name (str): unknown derived variable"""
+    Attributes:
+        state (Dict[str, Any]: values): all variable values
+        unknowns (Set[Unknown]): set of all found unknowns"""
 
 
 def get_rule_depending_variables(rule):

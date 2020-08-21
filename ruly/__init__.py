@@ -3,10 +3,12 @@ from ruly.common import (Rule,
                          Expression,
                          Condition,
                          EqualsCondition,
-                         Assignment)
+                         Assignment,
+                         Unknown,
+                         Evaluation)
 from ruly.evaluator import (backward_chain,
                             evaluate)
-from ruly import knowledge_base
+from ruly.knowledge_base import KnowledgeBase
 
 
 __all__ = ['Rule',
@@ -15,6 +17,8 @@ __all__ = ['Rule',
            'Condition',
            'EqualsCondition',
            'Assignment',
+           'Unknown',
+           'Evaluation',
            'backward_chain',
            'evaluate',
-           'knowledge_base']
+           'KnowledgeBase']

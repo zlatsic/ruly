@@ -24,9 +24,10 @@ def test_backward_chain():
         ruly.Rule(ruly.EqualsCondition(name='animal', value='canary'),
                   ruly.Assignment(name='color', value='yellow'))])
 
-    state = ruly.backward_chain(kb, 'color', sound='croak',
-                                behavior='eats flies')
+    state, _ = ruly.backward_chain(kb, 'color', sound='croak',
+                                   behavior='eats flies')
     assert state['color'] == 'green'
 
-    state = ruly.backward_chain(kb, 'color', sound='chirp', behavior='sings')
+    state, _ = ruly.backward_chain(kb, 'color', sound='chirp',
+                                   behavior='sings')
     assert state['color'] == 'yellow'

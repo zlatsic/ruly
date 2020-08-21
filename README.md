@@ -32,6 +32,11 @@ generate new rules on the fly during evaluations, etc., see the documentation.
 
 ## Development environment
 
-To set up the development environment, ruly's build tool,
-[`doit`](https://pydoit.org/) needs to be installed. Remaining tasks can be
-listed and executed using this tool.
+To set up the development environment, requirements must be installed either by
+calling `setup.py` or by installing them manually using `pip` and
+`requirements.txt` file. Also, ruly's build tool, [`doit`](https://pydoit.org/)
+needs to be installed. Supported tasks can be listed by calling:
+
+```bash
+doit list
+```
