@@ -6,10 +6,11 @@
 ruly
 ====
 
-Welcome to ruly documentation. The documentation is split into two main
-sections, usage and implementation. The first focuses more on general guide on
-how to use the library, focused on its users and second on the inner workings
-of it, directed more at the potential contributors.
+Welcome to ruly documentation! For basic info on the project, take a look at the
+project's `readme`_, the remainder of the documentation is in the following
+chapters.
+
+.. _readme: https://github.com/ZlatSic/ruly
 
 .. toctree::
    :maxdepth: 2

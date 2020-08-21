@@ -28,7 +28,8 @@ print(ruly.backward_chain(knowledge_base, 'creature', color='red'))
 ```
 
 For more examples and information on how to create new rules, solve conflicts,
-generate new rules on the fly during evaluations, etc., see the documentation.
+generate new rules on the fly during evaluations, etc., see the
+[documentation](https://ruly.readthedocs.io/en/latest/).
 
 ## Development environment
 
