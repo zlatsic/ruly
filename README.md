@@ -1,9 +1,9 @@
 # Ruly
 
 Ruly is a simple, lightweight rule engine that can be used to define rules and
-proove statements using backward chaining. It attempts to be highly
-configurable, allowing callers of its functions to define callbacks in cases
-for conflict resolutions or derivations of new rules.
+prove statements using backward chaining. It attempts to be highly configurable,
+allowing callers of its functions to define callbacks in cases for conflict
+resolutions or derivations of new rules.
 
 ## Installation
 
