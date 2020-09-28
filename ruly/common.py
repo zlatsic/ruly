@@ -1,6 +1,7 @@
 import abc
 from collections import namedtuple
 import enum
+import json
 
 
 class Rule(namedtuple('Rule', ['antecedent', 'consequent'])):
@@ -45,6 +46,9 @@ class EqualsCondition(namedtuple('EqualsCondition', ['name', 'value']),
         name (str): variable name
         value (Any): value against which the variable is compared to
     """
+
+    def __repr__(self):
+        return f'{self.name} = {json.dumps(self.value)}'
 
 
 class Assignment(namedtuple('Assignment', ['name', 'value'])):
