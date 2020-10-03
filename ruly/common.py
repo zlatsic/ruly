@@ -11,9 +11,14 @@ class Rule(namedtuple('Rule', ['antecedent', 'consequent'])):
         antecedent (Union[ruly.Condition, ruly.Expression]): expression or a
             condition that, if evaluated to True, fires assignment defined by
             the consequent
-        consenquent (ruly.Assignment): represents an assignment of a value to a
-            variable name
+        consenquent (Dict[str, Any]): keys are variable names, values are
+            values assigned if rule fires
     """
+
+    def __repr__(self):
+        consequent = ' AND '.join(
+            f'{k} = {v}' for k, v in self.consequent.items())
+        return f'IF {self.antecedent} THEN {consequent}'
 
 
 class Operator(enum.Enum):
@@ -30,6 +35,9 @@ class Expression(namedtuple('Expression', ['operator', 'children'])):
         children (List[Union[ruly.Condition, ruly.Expression]]): list of
             conditions or other expressions
     """
+
+    def __repr__(self):
+        return f' {self.operator.name} '.join([str(c) for c in self.children])
 
 
 class Condition(abc.ABC):
@@ -49,15 +57,6 @@ class EqualsCondition(namedtuple('EqualsCondition', ['name', 'value']),
 
     def __repr__(self):
         return f'{self.name} = {json.dumps(self.value)}'
-
-
-class Assignment(namedtuple('Assignment', ['name', 'value'])):
-    """Represents assignment of a value to a variable
-
-    Attributes:
-        name (str): variable name
-        value (Any): assigned value
-    """
 
 
 class Unknown(namedtuple('Unknown', ['state', 'derived_name'])):

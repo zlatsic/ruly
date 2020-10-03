@@ -1,8 +1,7 @@
 from ruly import common
 
 
-def backward_chain(knowledge_base, output_name,
-                   resolve_conflict_cb=None, order_rules_cb=None, **kwargs):
+def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
     """Evaulates the output using backward chaining
 
     The algorithm is depth-first-search, if goal variable assigment is
@@ -12,60 +11,62 @@ def backward_chain(knowledge_base, output_name,
     Args:
         knowledge_base (ruly.KnowledgeBase): knowledge base
         output_name (str): name of the goal variable
-        resolve_conflict_cb (Optional[Callable[[List[ruly.Rule]], Any]]):
-            function used to determine how value is calculated if multiple
-            rules should fire at same variable, uses first found rule if None
-        order_rules_cb(Optional[Callable[[Dict[str, Any], List[ruly.Rule]], List[ruly.Rule]]]):
-            function used to determine order of evaluation of rules that assign
-            the goal variable, uses order in knowledge base if None
-        kwargs (Dict[str, Any]): names and values of input variables
+        post_eval_cb(Optional[Callable]): callback called after determining
+            which rules fired, signature should match :func:`post_eval_cb`.
+            Return value is changed state. If `None`, state is changed by using
+            assignemnt of first fired rule's consequent (or not changed if no
+            rules fired)
+        **kwargs (Dict[str, Any]): names and values of input variables
 
     Returns:
-        ruly.Evaluation: state and unknowns gathered evaluating inputs
-    """  # NOQA
+        Dict[str, Any]: state containing calculated values
+    """
     state = {
         name: kwargs.get(name)
         for name in knowledge_base.input_variables.union(
             knowledge_base.derived_variables)}
-    unknowns = set()
     if state[output_name] is not None:
-        return common.Evaluation(state, unknowns)
-
-    ordered_rules = [rule for rule in knowledge_base.rules
-                     if rule.consequent.name == output_name]
-    if order_rules_cb is not None:
-        ordered_rules = order_rules_cb(state, ordered_rules)
+        return state
 
     fired_rules = []
-    for rule in ordered_rules:
+    for rule in [r for r in knowledge_base.rules
+                 if output_name in r.consequent]:
         depending_variables = common.get_rule_depending_variables(rule)
+        missing_inputs = []
         for depending_variable in [var for var in depending_variables
                                    if state[var] is None]:
             if depending_variable in knowledge_base.input_variables:
-                # TODO handle missing inputs
-                break
-            dependancy_eval = backward_chain(
-                knowledge_base,
-                depending_variable,
-                resolve_conflict_cb=resolve_conflict_cb,
-                **state)
-            unknowns |= dependancy_eval.unknowns
-            state = dict(state, **dependancy_eval.state)
+                missing_inputs.append(depending_variable)
+                continue
+            eval_state = backward_chain(knowledge_base, depending_variable,
+                                        post_eval_cb=post_eval_cb, **state)
+            state = dict(state, **eval_state)
             if state[depending_variable] is None:
-                unknowns.add(common.Unknown(dict(state), output_name))
                 break
-            else:
-                unknowns = {unk for unk in unknowns
-                            if unk.derived_name != depending_variable}
         if evaluate(state, rule.antecedent):
-            if resolve_conflict_cb is None:
-                state[output_name] = rule.consequent.value
-                return common.Evaluation(state, unknowns)
+            if post_eval_cb is None:
+                return dict(state, **rule.consequent)
             fired_rules.append(rule)
 
-    if len(fired_rules) > 0:
-        state[output_name] = resolve_conflict_cb(fired_rules)
-    return common.Evaluation(state, unknowns)
+    if post_eval_cb:
+        return post_eval_cb(state, output_name, fired_rules, missing_inputs)
+    return state
+
+
+def post_eval_cb(state, output_name, fired_rules, missing_inputs):
+    """Placeholder function describing input and output arguments for the post
+    evaluation callbacks
+
+    Args:
+        state (Dict[str, Any]): state calculated during evaluation
+        output_name (str): name of the goal variable
+        fired_rules (List[ruly.Rule]): rules whose antecedents were satisfied
+            during the evaluation
+        missing_inputs (List[str]): list of missing input values found during
+            evaluation
+    Returns:
+        Dict[str, Any]: updated state"""
+    pass
 
 
 def evaluate(inputs, antecedent):
