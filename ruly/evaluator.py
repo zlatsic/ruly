@@ -32,12 +32,10 @@ def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
     for rule in [r for r in knowledge_base.rules
                  if output_name in r.consequent]:
         depending_variables = common.get_rule_depending_variables(rule)
-        missing_inputs = []
         for depending_variable in [var for var in depending_variables
                                    if state[var] is None]:
             if depending_variable in knowledge_base.input_variables:
-                missing_inputs.append(depending_variable)
-                continue
+                break
             eval_state = backward_chain(knowledge_base, depending_variable,
                                         post_eval_cb=post_eval_cb, **state)
             state = dict(state, **eval_state)
@@ -49,11 +47,11 @@ def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
             fired_rules.append(rule)
 
     if post_eval_cb:
-        return post_eval_cb(state, output_name, fired_rules, missing_inputs)
+        return post_eval_cb(state, output_name, fired_rules)
     return state
 
 
-def post_eval_cb(state, output_name, fired_rules, missing_inputs):
+def post_eval_cb(state, output_name, fired_rules):
     """Placeholder function describing input and output arguments for the post
     evaluation callbacks
 
@@ -62,11 +60,8 @@ def post_eval_cb(state, output_name, fired_rules, missing_inputs):
         output_name (str): name of the goal variable
         fired_rules (List[ruly.Rule]): rules whose antecedents were satisfied
             during the evaluation
-        missing_inputs (List[str]): list of missing input values found during
-            evaluation
     Returns:
         Dict[str, Any]: updated state"""
-    pass
 
 
 def evaluate(inputs, antecedent):
