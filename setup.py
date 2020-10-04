@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='ruly-zlatsic',
+    name='ruly',
     packages=['ruly'],
     version=ruly.version.version,
     url='https://github.com/ZlatSic/ruly',
