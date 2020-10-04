@@ -4,3 +4,4 @@ __pycache__/
 .doit*
 dist/
 build/
+ruly.egg-info
