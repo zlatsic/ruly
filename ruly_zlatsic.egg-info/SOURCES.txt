@@ -1,0 +1,13 @@
+README.md
+setup.py
+ruly/__init__.py
+ruly/common.py
+ruly/evaluator.py
+ruly/knowledge_base.py
+ruly/parser.py
+ruly/version.py
+ruly_zlatsic.egg-info/PKG-INFO
+ruly_zlatsic.egg-info/SOURCES.txt
+ruly_zlatsic.egg-info/dependency_links.txt
+ruly_zlatsic.egg-info/top_level.txt
+test/test_evaluator.py
