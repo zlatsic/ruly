@@ -59,15 +59,6 @@ class EqualsCondition(namedtuple('EqualsCondition', ['name', 'value']),
         return f'{self.name} = {json.dumps(self.value)}'
 
 
-class Unknown(namedtuple('Unknown', ['state', 'derived_name'])):
-    """Structure representing unknown combination of state and
-    derived variable.
-
-    Attributes:
-        state (Dict[str, Any]): all variable values
-        derived_name (str): unknown derived variable"""
-
-
 class Evaluation(namedtuple('Evaluation', ['state', 'unknowns'])):
     """Structure representing an evaluation result
 

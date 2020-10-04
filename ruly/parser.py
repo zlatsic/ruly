@@ -11,6 +11,8 @@ def parse(rule_str):
 
     Returns:
         ruly.Rule"""
+
+    raise NotImplementedError()
     if_antecedent_str, consequent_str = rule_str.split('THEN')
     antecedent_str = if_antecedent_str.split('IF')[1]
     return common.Rule(_parse_antecedent(antecedent_str),
@@ -46,8 +48,9 @@ def _parse_antecedent(string):
     if op is None:
         if string == '_subexpression0':
             return _parse_antecedent(subexpressions[0])
-        
-        return _parse_condition(string)
+
+        # return _parse_condition(string)
+        return None
     children = []
     for child_str in string.split(op.name):
         if '_subexpression' in child_str:
