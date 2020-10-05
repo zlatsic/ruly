@@ -1,15 +1,15 @@
 import setuptools
 
-import ruly.version
 
-
-with open("README.md", "r") as fh:
+with open('README.md', 'r') as fh:
     long_description = fh.read()
+with open('version.txt') as fh:
+    version = fh.read()
 
 setuptools.setup(
     name='ruly',
     packages=['ruly'],
-    version=ruly.version.version,
+    version=version,
     url='https://github.com/ZlatSic/ruly',
     author='Zlatan Sičanica',
     author_email='zlatan.sicanica@gmail.com',

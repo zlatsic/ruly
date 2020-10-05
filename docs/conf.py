@@ -1,10 +1,10 @@
-import ruly.version
-
 project = 'ruly'
 copyright = '2020, Zlatan Sicanica'
 author = 'Zlatan Sicanica'
 
-release = ruly.version.version
+with open('../version.txt') as fh:
+    version = fh.read()
+release = version
 
 
 extensions = ['sphinxcontrib.napoleon',
