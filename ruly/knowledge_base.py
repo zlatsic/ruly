@@ -19,7 +19,7 @@ class KnowledgeBase:
         rules = []
         for arg in args:
             if isinstance(arg, str):
-                arg = self._parse(arg)
+                rules.append(parse(arg))
             elif isinstance(arg, KnowledgeBase):
                 rules.extend(arg.rules)
             elif isinstance(arg, common.Rule):

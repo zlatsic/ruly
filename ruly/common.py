@@ -15,7 +15,7 @@ class Rule(namedtuple('Rule', ['antecedent', 'consequent'])):
             values assigned if rule fires
     """
 
-    def __repr__(self):
+    def __str__(self):
         consequent = ' AND '.join(
             f'{k} = {v}' for k, v in self.consequent.items())
         return f'IF {self.antecedent} THEN {consequent}'
@@ -36,7 +36,7 @@ class Expression(namedtuple('Expression', ['operator', 'children'])):
             conditions or other expressions
     """
 
-    def __repr__(self):
+    def __str__(self):
         return f' {self.operator.name} '.join([str(c) for c in self.children])
 
 
@@ -55,7 +55,7 @@ class EqualsCondition(namedtuple('EqualsCondition', ['name', 'value']),
         value (Any): value against which the variable is compared to
     """
 
-    def __repr__(self):
+    def __str__(self):
         return f'{self.name} = {json.dumps(self.value)}'
 
 
