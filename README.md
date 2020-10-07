@@ -16,9 +16,6 @@ pip install ruly
 
 ## Usage
 
-Note that this function is not supported yet, rules can be created only as
-objects.
-
 ```python
 import ruly
 
