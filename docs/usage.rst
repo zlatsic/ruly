@@ -61,7 +61,7 @@ the following signature:
 Rule's antecedent is a logical expression that, if evaluated to true, signifies
 that rule should fire during evaluation. The consequent represents which value
 will be added to a variable if the rule fires, represented as a standard
-:class:dict. The dictionary can be interpreted as the key-value pairs as the
+dictionary. The dictionary can be interpreted as the key-value pairs as the
 part of the state affected by the firing rule.
 
 Conditions
@@ -70,7 +70,7 @@ Conditions
 .. autoclass:: ruly.Condition
     :members:
 
-.. autoclass:: ruly.EqualsCondition
+.. automodule:: ruly.conditions
     :members:
 
 Expressions

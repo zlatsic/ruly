@@ -1,4 +1,5 @@
 from ruly import common
+from ruly import conditions
 
 
 def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
@@ -75,7 +76,7 @@ def evaluate(inputs, antecedent):
     Returns:
         bool"""
     if isinstance(antecedent, common.Condition):
-        return _evaluate_condition(antecedent, inputs[antecedent.name])
+        return antecedent.satisfied(inputs[antecedent.name])
     elif isinstance(antecedent, common.Expression):
         return _evaluate_expression(antecedent, inputs)
 
@@ -86,5 +87,5 @@ def _evaluate_expression(expression, inputs):
 
 
 def _evaluate_condition(condition, input_value):
-    if isinstance(condition, common.EqualsCondition):
+    if isinstance(condition, conditions.Equals):
         return condition.value == input_value

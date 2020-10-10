@@ -1,6 +1,7 @@
 import json
 import re
 from ruly import common
+from ruly import conditions
 
 
 def parse(rule_str):
@@ -26,8 +27,8 @@ def rule_str(rule):
 
     Returns:
         str"""
-    return (f'IF {_repr_antecedent(rule.antecedent)} '
-            f'THEN {_repr_consequent(rule.consequent)}')
+    return (f'IF {_str_antecedent(rule.antecedent)} '
+            f'THEN {_str_consequent(rule.consequent)}')
 
 
 def _parse_antecedent(string):
@@ -73,25 +74,39 @@ def _parse_consequent(string):
 
 
 def _parse_condition(string):
-    name, value_json = string.split('=', 2)
-    return common.EqualsCondition(name.strip(), json.loads(value_json))
+    op = None
+    cls = None
+    if '<=' in string:
+        op, cls = '<=', conditions.LessOrEqual
+    elif '>=' in string:
+        op, cls = '>=', conditions.GreaterOrEqual
+    elif '<' in string:
+        op, cls = '<', conditions.Less
+    elif '>' in string:
+        op, cls = '>', conditions.Greater
+    elif '=' in string:
+        op, cls = '=', conditions.Equals
+    if op is None:
+        raise ValueError(f'no operand found for condition {string}')
+    name, value_json = string.split(op, 2)
+    return cls(name.strip(), json.loads(value_json))
 
 
-def _repr_antecedent(antecedent):
+def _str_antecedent(antecedent):
     if isinstance(antecedent, common.Expression):
-        return _repr_expression(antecedent)
+        return _str_expression(antecedent)
     return repr(antecedent)
 
 
-def _repr_expression(expression):
-    child_reprs = []
+def _str_expression(expression):
+    child_strs = []
     for child in expression.children:
         if isinstance(child, common.Expression):
-            child_reprs.append(f'({_repr_expression(child)})')
+            child_strs.append(f'({_str_expression(child)})')
         elif isinstance(child, common.Condition):
-            child_reprs.append(repr(child))
-    return f' {expression.operator.name} '.join(child_reprs)
+            child_strs.append(str(child))
+    return f' {expression.operator.name} '.join(child_strs)
 
 
-def _repr_consequent(assignment):
+def _str_consequent(assignment):
     return f'{assignment.name} = {json.dumps(assignment.value)}'

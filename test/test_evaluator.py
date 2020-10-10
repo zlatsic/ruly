@@ -50,3 +50,23 @@ def test_bc_post_eval():
     state = ruly.backward_chain(kb, 'color', post_eval_cb=post_eval_cb,
                                 sound='roar')
     assert state['color'] == 'really n/a'
+
+
+def test_numeric():
+    kb = ruly.KnowledgeBase(
+        'IF weight>=100 THEN animal="elephant"',
+        'IF weight>=50 AND weight<100 THEN animal="horse"',
+        'IF weight>=25 AND weight<50 THEN animal="dog"',
+        'IF weight>0 AND weight<25 THEN animal="mouse"')
+
+    state = ruly.backward_chain(kb, 'animal', weight=145)
+    assert state['animal'] == 'elephant'
+
+    state = ruly.backward_chain(kb, 'animal', weight=59)
+    assert state['animal'] == 'horse'
+
+    state = ruly.backward_chain(kb, 'animal', weight=37)
+    assert state['animal'] == 'dog'
+
+    state = ruly.backward_chain(kb, 'animal', weight=12)
+    assert state['animal'] == 'mouse'

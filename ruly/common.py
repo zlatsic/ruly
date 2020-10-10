@@ -1,7 +1,6 @@
 import abc
 from collections import namedtuple
 import enum
-import json
 
 
 class Rule(namedtuple('Rule', ['antecedent', 'consequent'])):
@@ -44,19 +43,15 @@ class Condition(abc.ABC):
     """Abstract class representing a condition that needs to be satisfied when
     evaluating an expression."""
 
+    @abc.abstractmethod
+    def satisfied(self, value):
+        """Checks whether the condition is satisfied for the given value
 
-class EqualsCondition(namedtuple('EqualsCondition', ['name', 'value']),
-                      Condition):
-    """Condition that checks wheter variable value is
-    equal to what is written under the value attribute
+        Args:
+            value (Any): checked value
 
-    Attributes:
-        name (str): variable name
-        value (Any): value against which the variable is compared to
-    """
-
-    def __str__(self):
-        return f'{self.name} = {json.dumps(self.value)}'
+        Returns:
+            bool: true if condition is satisfied, false otherwise"""
 
 
 class Evaluation(namedtuple('Evaluation', ['state', 'unknowns'])):
