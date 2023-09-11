@@ -6,3 +6,4 @@ dist/
 build/
 ruly.egg-info
 test/.coverage
+.idea
