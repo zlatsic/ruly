@@ -7,7 +7,7 @@ resolutions or derivations of new rules.
 
 ## Installation
 
-Ruly can be installed and used as a Python package. It can be installed by
+Ruly can be installed and used as a Python (>=3.8) package. It can be installed by
 calling:
 
 ```
@@ -34,8 +34,8 @@ generate new rules on the fly during evaluations, etc., see the
 
 To set up the development environment, requirements must be installed either by
 calling `setup.py` or by installing them manually using `pip` and
-`requirements.txt` file. Also, ruly's build tool, [`doit`](https://pydoit.org/)
-needs to be installed. Supported tasks can be listed by calling:
+`requirements.txt` file on a 3.12 version of Python. Also, ruly's build tool,
+[`doit`](https://pydoit.org/) needs to be installed. Supported tasks can be listed by calling:
 
 ```bash
 doit list

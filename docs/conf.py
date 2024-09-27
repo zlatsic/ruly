@@ -7,7 +7,7 @@ with open('../version.txt') as fh:
 release = version
 
 
-extensions = ['sphinxcontrib.napoleon',
+extensions = ['sphinx.ext.napoleon',
               'sphinx.ext.intersphinx']
 
 intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
