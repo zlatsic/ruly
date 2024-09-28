@@ -50,7 +50,9 @@ def task_docs():
 def task_dist():
     """Create dist"""
     def run(args):
-        shutil.rmtree(repo_path / "dist")
+        dist_path = repo_path / "dist"
+        if dist_path.exists():
+            shutil.rmtree(dist_path)
         subprocess.run(['python', "-m", "build", "-sw"])
 
     return {'actions': [run], 'pos_arg': 'args'}
