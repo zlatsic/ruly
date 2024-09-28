@@ -50,7 +50,7 @@ def task_docs():
 def task_dist():
     """Create dist"""
     def run(args):
-        args = args or []
+        shutil.rmtree(repo_path / "dist")
         subprocess.run(['python', "-m", "build", "-sw"])
 
     return {'actions': [run], 'pos_arg': 'args'}
@@ -64,6 +64,7 @@ def task_plat_test():
         if tmp_dir.exists():
             shutil.rmtree(tmp_dir)
         for version in args or [f"3.{version}" for version in range(6, 13)]:
+
             test_path = tmp_dir / f"test-{version}"
             test_path.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ruly_wheel, test_path / ruly_wheel.name)
@@ -73,6 +74,8 @@ def task_plat_test():
                     python_version=version,
                     ruly_wheel_filename=ruly_wheel.name,
                 ))
+
+            print("testing on Python", version)
             image = subprocess.run(
                 ["docker", "build", "--quiet", str(test_path)],
                 capture_output=True
