@@ -1,7 +1,7 @@
 [project]
 name = "ruly"
-version = "0.0.6"
-urls = {"github" = "https://github.com/zlatsic/ruly" }
+version = "0.0.7"
+urls = {"GitHub" = "https://github.com/zlatsic/ruly", "Docs" = "https://ruly.readthedocs.io/en/latest/" }
 authors = [ { "name" = "Zlatan Sičanica", "email" = "zlatan.sicanica@gmail.com" }]
 description = "Simple, extensible rule engine in Python"
 classifiers = [
@@ -14,3 +14,5 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
     "Topic :: Utilities"
 ]
+readme = "README.md"
+license = { file = "LICENSE" }
