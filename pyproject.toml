@@ -1,0 +1,16 @@
+[project]
+name = "ruly"
+version = "0.0.5"
+urls = { "github" = "https://github.com/zlatsic/ruly" }
+authors = [ { "name" = "Zlatan Sičanica", "email" = "zlatan.sicanica@gmail.com" }]
+description = "Simple, extensible rule engine in Python"
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Utilities"
+]
