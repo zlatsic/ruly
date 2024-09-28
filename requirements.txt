@@ -22,7 +22,6 @@ Pygments==2.18.0
 pyproject_hooks==1.1.0
 pytest==8.3.3
 requests==2.32.3
-setuptools==75.1.0
 snowballstemmer==2.2.0
 Sphinx==8.0.2
 sphinxcontrib-applehelp==2.0.0
