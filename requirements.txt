@@ -1,5 +1,6 @@
 alabaster==1.0.0
 babel==2.16.0
+build==1.2.2
 certifi==2024.8.30
 charset-normalizer==3.3.2
 cloudpickle==3.0.0
@@ -18,6 +19,7 @@ pluggy==1.5.0
 pycodestyle==2.12.1
 pyflakes==3.2.0
 Pygments==2.18.0
+pyproject_hooks==1.1.0
 pytest==8.3.3
 requests==2.32.3
 setuptools==75.1.0

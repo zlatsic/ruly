@@ -3,13 +3,11 @@ import setuptools
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
-with open('version.txt') as fh:
-    version = fh.read()[:-1]
 
 setuptools.setup(
     name='ruly',
     packages=['ruly'],
-    version=version,
+    version='0.0.5',
     url='https://github.com/ZlatSic/ruly',
     author='Zlatan Sičanica',
     author_email='zlatan.sicanica@gmail.com',
@@ -22,7 +20,7 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries',
         'Topic :: Utilities'
     ])

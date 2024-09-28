@@ -1,9 +1,11 @@
-project = 'ruly'
-copyright = '2020, Zlatan Sicanica'
-author = 'Zlatan Sicanica'
+from datetime import datetime
+import importlib.metadata
 
-with open('../version.txt') as fh:
-    version = fh.read()
+
+project = 'ruly'
+author = 'Zlatan Sičanica'
+copyright = f'{datetime.today().year}, {author}'
+version = importlib.metadata.version(project)
 release = version
 
 

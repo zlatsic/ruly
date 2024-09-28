@@ -34,9 +34,14 @@ generate new rules on the fly during evaluations, etc., see the
 
 To set up the development environment, requirements must be installed either by
 calling `setup.py` or by installing them manually using `pip` and
-`requirements.txt` file on a 3.12 version of Python. Also, ruly's build tool,
-[`doit`](https://pydoit.org/) needs to be installed. Supported tasks can be listed by calling:
+`requirements.txt` file. Also, ruly's build tool, [`doit`](https://pydoit.org/)
+needs to be installed. Supported tasks can be listed by calling:
 
 ```bash
 doit list
 ```
+
+NOTE: Ruly's development environment is using Python 3.12, but since Ruly does
+not require any runtime dependencies, the lowest supported version is Python 3.6.
+To test any new changes use the platform tests (`doit plat_test`) and update the
+minor version if backwards compatibility is broken.
