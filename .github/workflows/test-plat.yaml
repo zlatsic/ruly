@@ -4,17 +4,13 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
-
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.12
       - name: Install pytest
-        run: "pip install pytest"
-      - name: Run tests
-        run: "pytest ."
+        run: "pip install -r requirements.txt"
+      - name: Plat tests
+        run: "doit plat_test"
