@@ -21,16 +21,30 @@ jobs:
           path: ./dist
   test:
     needs: ["build"]
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
+        versions:
+          - os: "ubuntu-20-04"
+            python: "3.6"
+          - os: "ubuntu-latest"
+            python: "3.7"
+          - os: "ubuntu-latest"
+            python: "3.8"
+          - os: "ubuntu-latest"
+            python: "3.9"
+          - os: "ubuntu-latest"
+            python: "3.10"
+          - os: "ubuntu-latest"
+            python: "3.11"
+          - os: "ubuntu-latest"
+            python: "3.12"
+    runs-on: ${{ matrix.versions.os }}
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.versions.python }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.versions.python }}
       - name: Download Ruly wheel
         uses: actions/download-artifact@master
         with:
