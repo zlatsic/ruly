@@ -7,7 +7,7 @@ resolutions or derivations of new rules.
 
 ## Installation
 
-Ruly can be installed and used as a Python (>=3.8) package. It can be installed by
+Ruly can be installed and used as a Python (>=3.6) package. It can be installed by
 calling:
 
 ```
