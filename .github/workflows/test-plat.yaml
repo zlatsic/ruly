@@ -1,6 +1,13 @@
 name: Ruly platform tests
-on: [push]
-
+on:
+  push:
+    paths:
+      - 'github/workflows/**'
+      - 'ruly/**'
+      - 'test/**'
+      - 'dodo.py'
+      - 'pyproject.toml'
+      - 'requirements.txt'
 jobs:
   build:
     runs-on: ubuntu-latest
