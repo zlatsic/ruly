@@ -24,20 +24,27 @@ jobs:
     strategy:
       matrix:
         versions:
-          - os: "ubuntu-20-04"
+          - os: "ubuntu-latest"
             python: "3.6"
+            arch: x86
           - os: "ubuntu-latest"
             python: "3.7"
+            arch: amd64
           - os: "ubuntu-latest"
             python: "3.8"
+            arch: amd64
           - os: "ubuntu-latest"
             python: "3.9"
+            arch: amd64
           - os: "ubuntu-latest"
             python: "3.10"
+            arch: amd64
           - os: "ubuntu-latest"
             python: "3.11"
+            arch: amd64
           - os: "ubuntu-latest"
             python: "3.12"
+            arch: amd64
     runs-on: ${{ matrix.versions.os }}
     steps:
       - uses: actions/checkout@v4
@@ -45,6 +52,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.versions.python }}
+          architecture: ${{ matrix.versions.arch }}
       - name: Download Ruly wheel
         uses: actions/download-artifact@master
         with:
