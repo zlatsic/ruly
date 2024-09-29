@@ -2,7 +2,7 @@ name: Ruly platform tests
 on:
   push:
     paths:
-      - 'github/workflows/**'
+      - '.github/workflows/**'
       - 'ruly/**'
       - 'test/**'
       - 'dodo.py'
