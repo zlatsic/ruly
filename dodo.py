@@ -29,17 +29,23 @@ def task_lint():
     """Check linting"""
 
     def run(args):
-        args = args or []
-        subprocess.run(
-            ["flake8", "ruly", "test", "setup.py", "dodo.py", *args]
-        )
+        subprocess.run(["flake8", "ruly", "test", "dodo.py", *(args or [])])
+
+    return {"actions": [run], "pos_arg": "args"}
+
+
+def task_format():
+    """Check formatting"""
+
+    def run(args):
+        subprocess.run(["black", "--check", ".", *(args or [])])
 
     return {"actions": [run], "pos_arg": "args"}
 
 
 def task_check():
     """Pre-deployment check"""
-    return {"actions": [], "task_dep": ["test", "lint"]}
+    return {"actions": [], "task_dep": ["test", "lint", "format"]}
 
 
 def task_docs():

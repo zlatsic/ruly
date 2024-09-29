@@ -13,7 +13,7 @@ import ruly
             ),
         ),
         (
-            'IF   rule_engine  =   "ruly"     THEN    usability   =   "awesome"',
+            'IF   rule_engine  =   "ruly"     THEN    usability  =  "awesome"',
             ruly.Rule(
                 ruly.Equals("rule_engine", "ruly"), {"usability": "awesome"}
             ),
@@ -34,8 +34,8 @@ import ruly
             ),
         ),
         (
-            'IF language="python" AND rule_engine="ruly" THEN usability="awesome" '
-            'AND life="good"',
+            'IF language="python" AND rule_engine="ruly" '
+            'THEN usability="awesome" AND life="good"',
             ruly.Rule(
                 ruly.Expression(
                     ruly.Operator.AND,
@@ -48,8 +48,8 @@ import ruly
             ),
         ),
         (
-            'IF (language="python" AND weather="sunny") AND rule_engine="ruly" '
-            'THEN usability="awesome"',
+            'IF (language="python" AND weather="sunny") '
+            'AND rule_engine="ruly" THEN usability="awesome"',
             ruly.Rule(
                 ruly.Expression(
                     ruly.Operator.AND,
