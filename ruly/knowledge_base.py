@@ -1,4 +1,4 @@
-from ruly import (common, parser)
+from ruly import common, parser
 
 
 class KnowledgeBase:
@@ -44,11 +44,11 @@ class KnowledgeBase:
     @property
     def input_variables(self):
         """Set[str]: Names of variables that are never contained within a
-            rule's antecedent"""
+        rule's antecedent"""
         return self._input_variables
 
     @property
     def derived_variables(self):
         """Set[str]: Names of variables contained within at least one rule's
-            antecedent"""
+        antecedent"""
         return self._derived_variables

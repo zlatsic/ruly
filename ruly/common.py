@@ -3,7 +3,7 @@ from collections import namedtuple
 import enum
 
 
-class Rule(namedtuple('Rule', ['antecedent', 'consequent'])):
+class Rule(namedtuple("Rule", ["antecedent", "consequent"])):
     """Knowledge base rule
 
     Attributes:
@@ -15,16 +15,17 @@ class Rule(namedtuple('Rule', ['antecedent', 'consequent'])):
     """
 
     def __str__(self):
-        consequent = ' AND '.join(
-            f'{k} = {v}' for k, v in self.consequent.items())
-        return f'IF {self.antecedent} THEN {consequent}'
+        consequent = " AND ".join(
+            f"{k} = {v}" for k, v in self.consequent.items()
+        )
+        return f"IF {self.antecedent} THEN {consequent}"
 
 
 class Operator(enum.Enum):
     AND = 1
 
 
-class Expression(namedtuple('Expression', ['operator', 'children'])):
+class Expression(namedtuple("Expression", ["operator", "children"])):
     """Logical expression, aggregation of conditions and
     sub-expressions
 
@@ -36,7 +37,7 @@ class Expression(namedtuple('Expression', ['operator', 'children'])):
     """
 
     def __str__(self):
-        return f' {self.operator.name} '.join([str(c) for c in self.children])
+        return f" {self.operator.name} ".join([str(c) for c in self.children])
 
 
 class Condition(abc.ABC):
@@ -54,7 +55,7 @@ class Condition(abc.ABC):
             bool: true if condition is satisfied, false otherwise"""
 
 
-class Evaluation(namedtuple('Evaluation', ['state', 'unknowns'])):
+class Evaluation(namedtuple("Evaluation", ["state", "unknowns"])):
     """Structure representing an evaluation result
 
     Attributes:

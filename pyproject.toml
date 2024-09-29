@@ -16,3 +16,6 @@ classifiers = [
 ]
 readme = "README.md"
 license = { file = "LICENSE" }
+
+[tool.black]
+line-length = 79

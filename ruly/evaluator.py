@@ -3,9 +3,9 @@ from ruly import conditions
 
 
 def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
-    """Evaulates the output using backward chaining
+    """Evaluates the output using backward chaining
 
-    The algorithm is depth-first-search, if goal variable assigment is
+    The algorithm is depth-first-search, if goal variable assignment is
     contained within a rule that has a depending derived variable, this
     variable is solved for using the same function call.
 
@@ -15,7 +15,7 @@ def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
         post_eval_cb(Optional[Callable]): callback called after determining
             which rules fired, signature should match :func:`post_eval_cb`.
             Return value is changed state. If `None`, state is changed by using
-            assignemnt of first fired rule's consequent (or not changed if no
+            assignment of first fired rule's consequent (or not changed if no
             rules fired)
         **kwargs (Dict[str, Any]): names and values of input variables
 
@@ -25,20 +25,28 @@ def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
     state = {
         name: kwargs.get(name)
         for name in knowledge_base.input_variables.union(
-            knowledge_base.derived_variables)}
+            knowledge_base.derived_variables
+        )
+    }
     if state[output_name] is not None:
         return state
 
     fired_rules = []
-    for rule in [r for r in knowledge_base.rules
-                 if output_name in r.consequent]:
+    for rule in [
+        r for r in knowledge_base.rules if output_name in r.consequent
+    ]:
         depending_variables = common.get_rule_depending_variables(rule)
-        for depending_variable in [var for var in depending_variables
-                                   if state[var] is None]:
+        for depending_variable in [
+            var for var in depending_variables if state[var] is None
+        ]:
             if depending_variable in knowledge_base.input_variables:
                 break
-            eval_state = backward_chain(knowledge_base, depending_variable,
-                                        post_eval_cb=post_eval_cb, **state)
+            eval_state = backward_chain(
+                knowledge_base,
+                depending_variable,
+                post_eval_cb=post_eval_cb,
+                **state
+            )
             state = dict(state, **eval_state)
             if state[depending_variable] is None:
                 break

@@ -17,11 +17,11 @@ Ruly's main use case can be summed up with the following code block:
 
     import ruly
 
-    knowledge_base = ruly.knowledge_base.create([
+    knowledge_base = ruly.KnowledgeBase(
         'IF sound="croak" AND behavior="eats flies" THEN animal="frog"',
         'IF sound="chirp" AND behavior="sings" THEN animal="canary"',
         'IF animal="frog" THEN color="green"',
-        'IF animal="canary" THEN color="yellow"'])
+        'IF animal="canary" THEN color="yellow"')
     state = ruly.backward_chain(knowledge_base, 'color',
                                 sound='croak',
                                 behavior='eats flies')

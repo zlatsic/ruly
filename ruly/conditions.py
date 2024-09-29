@@ -4,7 +4,7 @@ import json
 from ruly import common
 
 
-class Equals(namedtuple('Equals', ['name', 'value']), common.Condition):
+class Equals(namedtuple("Equals", ["name", "value"]), common.Condition):
     """Condition that checks wheter variable value is equal to what is written
     under the value attribute
 
@@ -14,13 +14,13 @@ class Equals(namedtuple('Equals', ['name', 'value']), common.Condition):
     """
 
     def __str__(self):
-        return f'{self.name} = {json.dumps(self.value)}'
+        return f"{self.name} = {json.dumps(self.value)}"
 
     def satisfied(self, value):
         return value == self.value
 
 
-class Greater(namedtuple('Greater', ['name', 'value']), common.Condition):
+class Greater(namedtuple("Greater", ["name", "value"]), common.Condition):
     """Condition that checks wheter variable value is greater than what is
     written under the value attribute
 
@@ -30,14 +30,15 @@ class Greater(namedtuple('Greater', ['name', 'value']), common.Condition):
     """
 
     def __str__(self):
-        return f'{self.name} > {json.dumps(self.value)}'
+        return f"{self.name} > {json.dumps(self.value)}"
 
     def satisfied(self, value):
         return value > self.value
 
 
-class GreaterOrEqual(namedtuple('GreaterOrEqual', ['name', 'value']),
-                     common.Condition):
+class GreaterOrEqual(
+    namedtuple("GreaterOrEqual", ["name", "value"]), common.Condition
+):
     """Condition that checks wheter variable value is greater or equal to what
     is written under the value attribute
 
@@ -47,13 +48,13 @@ class GreaterOrEqual(namedtuple('GreaterOrEqual', ['name', 'value']),
     """
 
     def __str__(self):
-        return f'{self.name} >= {json.dumps(self.value)}'
+        return f"{self.name} >= {json.dumps(self.value)}"
 
     def satisfied(self, value):
         return value >= self.value
 
 
-class Less(namedtuple('Less', ['name', 'value']), common.Condition):
+class Less(namedtuple("Less", ["name", "value"]), common.Condition):
     """Condition that checks wheter variable value is less than what is
     written under the value attribute
 
@@ -63,14 +64,15 @@ class Less(namedtuple('Less', ['name', 'value']), common.Condition):
     """
 
     def __str__(self):
-        return f'{self.name} < {json.dumps(self.value)}'
+        return f"{self.name} < {json.dumps(self.value)}"
 
     def satisfied(self, value):
         return value < self.value
 
 
-class LessOrEqual(namedtuple('LessOrEqual', ['name', 'value']),
-                  common.Condition):
+class LessOrEqual(
+    namedtuple("LessOrEqual", ["name", "value"]), common.Condition
+):
     """Condition that checks wheter variable value is less or equal to what
     is written under the value attribute
 
@@ -80,7 +82,7 @@ class LessOrEqual(namedtuple('LessOrEqual', ['name', 'value']),
     """
 
     def __str__(self):
-        return f'{self.name} >= {json.dumps(self.value)}'
+        return f"{self.name} >= {json.dumps(self.value)}"
 
     def satisfied(self, value):
         return value <= self.value
