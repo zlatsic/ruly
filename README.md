@@ -43,7 +43,8 @@ doit list
 
 NOTE: Ruly's development environment is using Python 3.12, but since Ruly does
 not require any runtime dependencies, the lowest supported version is Python
-3.6. To test any new changes use the platform tests (`doit plat_test`) and
-update the minor version if backwards compatibility is broken. Additionally,
-there's CI support to test 3.7>, however 3.6 is not included in this because
-GH actions we
+3.6. To test any new changes use the platform tests
+(`doit plat_test` - requires docker) and update the minor version if backwards
+compatibility is broken. Additionally, there's CI support to test 3.7>, however
+3.6 is not included in this because GH actions were having some issues with
+that version (contributions welcome).
