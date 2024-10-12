@@ -28,9 +28,9 @@ def test_bc_post_eval():
         'IF animal="bird" THEN color="n/a"',
     )
 
-    def post_eval_cb(state, output_name, fired_rules):
+    def post_eval_cb(eval_state, output_name, fired_rules):
         if len(fired_rules) == 0:
-            return dict(state, **{output_name: "really n/a"})
+            return dict(eval_state, **{output_name: "really n/a"})
         elif len(fired_rules) == 1:
             selected_rule = fired_rules[0]
         else:
@@ -38,7 +38,7 @@ def test_bc_post_eval():
                 fired_rules,
                 key=lambda r: len(ruly.get_rule_depending_variables(r)),
             )
-        new_state = dict(state)
+        new_state = dict(eval_state)
         new_state.update(selected_rule.consequent)
         return new_state
 

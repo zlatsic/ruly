@@ -4,34 +4,20 @@ from ruly import common
 from ruly import conditions
 
 
-def parse(rule_str):
+def parse(rule):
     """Parses a string representation of a rule and returns it. Uses JSON to
     deserialize values.
 
     Args:
-        rule_str (str): string representation of a rule
+        rule (str): string representation of a rule
 
     Returns:
         ruly.Rule"""
 
-    if_antecedent_str, consequent_str = rule_str.split("THEN")
+    if_antecedent_str, consequent_str = rule.split("THEN")
     antecedent_str = if_antecedent_str.split("IF")[1]
     return common.Rule(
         _parse_antecedent(antecedent_str), _parse_consequent(consequent_str)
-    )
-
-
-def rule_str(rule):
-    """Returns a human-readable rule representation
-
-    Args:
-        rule (ruly.Rule): rule
-
-    Returns:
-        str"""
-    return (
-        f"IF {_str_antecedent(rule.antecedent)} "
-        f"THEN {_str_consequent(rule.consequent)}"
     )
 
 
@@ -41,7 +27,7 @@ def _parse_antecedent(string):
     subexpressions = re.findall(parenth_regex, string)
     placeholders = []
 
-    def repl(m):
+    def repl(_):
         i = len(placeholders)
         placeholder = f"_subexpression{i}"
         while placeholder in string:
@@ -117,4 +103,4 @@ def _str_expression(expression):
 
 
 def _str_consequent(assignment):
-    return f"{assignment.name} = {json.dumps(assignment.value)}"
+    return f'{assignment["name"]} = {json.dumps(assignment["value"])}'

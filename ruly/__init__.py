@@ -3,11 +3,10 @@ from ruly.common import (
     Operator,
     Expression,
     Condition,
-    Evaluation,
     get_rule_depending_variables,
 )
 from ruly.conditions import Equals, Greater, GreaterOrEqual, Less, LessOrEqual
-from ruly.evaluator import backward_chain, post_eval_cb, evaluate
+from ruly.evaluator import backward_chain, PostEvalCb, evaluate
 from ruly.knowledge_base import KnowledgeBase
 from ruly.parser import parse
 
@@ -16,7 +15,6 @@ __all__ = [
     "Rule",
     "Operator",
     "Expression",
-    "Evaluation",
     "get_rule_depending_variables",
     "Condition",
     "Equals",
@@ -25,7 +23,7 @@ __all__ = [
     "Less",
     "LessOrEqual",
     "backward_chain",
-    "post_eval_cb",
+    "PostEvalCb",
     "evaluate",
     "KnowledgeBase",
     "parse",

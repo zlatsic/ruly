@@ -1,23 +1,45 @@
+from typing import Callable, Dict, Any, List, Optional
+import sys
+
 from ruly import common
 from ruly import conditions
+
+
+PostEvalCb = Optional[
+    Callable[[Dict[str, Any], str, List[common.Rule]], Dict[str, Any]]
+]
+if sys.version_info >= (3, 7):
+    # __doc__ is read-only in 3.6, however this is only needed for building
+    # docs, which can be done on dev environments with higher Python version
+    PostEvalCb.__doc__ = """
+Callable type of the post evaluation callback function.
+
+Args:
+    state (Dict[str, Any]): state calculated during evaluation
+    output_name (str): name of the goal variable
+    fired_rules (List[ruly.Rule]): rules whose antecedents were satisfied
+    during the evaluation
+    
+Returns:
+    Dict[str, Any]: updated state
+"""
 
 
 def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
     """Evaluates the output using backward chaining
 
     The algorithm is depth-first-search, if goal variable assignment is
-    contained within a rule that has a depending derived variable, this
+    contained within a rule that has a depending on a derived variable, this
     variable is solved for using the same function call.
 
     Args:
         knowledge_base (ruly.KnowledgeBase): knowledge base
         output_name (str): name of the goal variable
-        post_eval_cb(Optional[Callable]): callback called after determining
-            which rules fired, signature should match :func:`post_eval_cb`.
-            Return value is changed state. If `None`, state is changed by using
-            assignment of first fired rule's consequent (or not changed if no
-            rules fired)
-        **kwargs (Dict[str, Any]): names and values of input variables
+        post_eval_cb(ruly.PostEvalCb): callback called after
+            determining which rules fired. Return value is changed state. If
+            `None`, state is changed by using assignment of first fired rule's
+            consequent (or not changed if no rules fired)
+        **kwargs (Any): names and values of input variables
 
     Returns:
         Dict[str, Any]: state containing calculated values
@@ -58,19 +80,6 @@ def backward_chain(knowledge_base, output_name, post_eval_cb=None, **kwargs):
     if post_eval_cb:
         return post_eval_cb(state, output_name, fired_rules)
     return state
-
-
-def post_eval_cb(state, output_name, fired_rules):
-    """Placeholder function describing input and output arguments for the post
-    evaluation callbacks
-
-    Args:
-        state (Dict[str, Any]): state calculated during evaluation
-        output_name (str): name of the goal variable
-        fired_rules (List[ruly.Rule]): rules whose antecedents were satisfied
-            during the evaluation
-    Returns:
-        Dict[str, Any]: updated state"""
 
 
 def evaluate(inputs, antecedent):

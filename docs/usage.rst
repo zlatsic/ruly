@@ -94,6 +94,6 @@ Ruly offers evaluation functions for individual rules and knowledge bases.
 
 .. autofunction:: ruly.backward_chain
 
-.. autofunction:: ruly.post_eval_cb
+.. autofunction:: ruly.PostEvalCb
 
 .. autofunction:: ruly.evaluate

@@ -1,6 +1,6 @@
 [project]
 name = "ruly"
-version = "0.0.7"
+version = "0.1.0"
 urls = {"GitHub" = "https://github.com/zlatsic/ruly", "Docs" = "https://ruly.readthedocs.io/en/latest/" }
 authors = [ { "name" = "Zlatan Sičanica", "email" = "zlatan.sicanica@gmail.com" }]
 description = "Simple, extensible rule engine in Python"
@@ -16,6 +16,9 @@ classifiers = [
 ]
 readme = "README.md"
 license = { file = "LICENSE" }
+dependencies = [
+    "dataclasses >= 0.6"
+]
 
 [tool.black]
 line-length = 79
